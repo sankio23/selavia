@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Notte del Faro Spento — Selavia</title>
+<style>
+  :root{--gold:#e7b94a;--gold2:#c9952a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#05080d;font-family:Georgia,serif;color:#eee}
+  .frame{min-height:100%;display:flex;align-items:center;justify-content:center;padding:18px}
+  .stage{position:relative;width:100%;max-width:920px;aspect-ratio:16/9;overflow:hidden;border-radius:14px;
+    border:1px solid #1b2330;box-shadow:0 12px 50px rgba(0,0,0,.7);background:#04060a;cursor:default}
+  /* SKY */
+  .sky{position:absolute;inset:0;background:linear-gradient(180deg,#0a1422 0%,#0d2030 45%,#123047 62%,#0c1a26 100%);transition:filter 3s ease, background 3s ease}
+  .stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 18%,#cfe2ff,transparent),radial-gradient(1px 1px at 70% 12%,#fff,transparent),radial-gradient(1px 1px at 45% 25%,#bcd,transparent),radial-gradient(1px 1px at 85% 30%,#fff,transparent),radial-gradient(1px 1px at 12% 35%,#cfe2ff,transparent);opacity:.7}
+  /* SEA */
+  .sea{position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(180deg,#0e2f44,#06131d);overflow:hidden;transition:filter 3s ease}
+  .shimmer{position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 18px,rgba(231,185,74,.05) 19px,transparent 21px);
+    animation:drift 9s linear infinite;opacity:.6}
+  .shimmer.b{animation-duration:14s;opacity:.35;background:repeating-linear-gradient(90deg,transparent,transparent 26px,rgba(120,180,210,.06) 27px,transparent 30px)}
+  @keyframes drift{to{transform:translateX(-120px)}}
+  /* TIDE overlay rises */
+  .tide{position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(180deg,rgba(20,60,80,.0),rgba(10,40,55,.6));transform:translateY(40%);transition:transform 6s cubic-bezier(.4,0,.2,1)}
+  /* LIGHTHOUSE */
+  .tower{position:absolute;left:50%;bottom:38%;width:34px;height:165px;transform:translateX(-50%);
+    background:linear-gradient(90deg,#0a0f16,#1b2533 45%,#0a0f16);border-radius:5px 5px 0 0;z-index:4}
+  .tower::after{content:"";position:absolute;left:-6px;bottom:-8px;width:46px;height:12px;background:#0a0f16;border-radius:3px}
+  .lamp{position:absolute;left:50%;bottom:calc(38% + 150px);width:22px;height:20px;transform:translateX(-50%);
+    background:radial-gradient(circle,#fff7df,#e7b94a 55%,#7a5410 100%);border-radius:3px;z-index:5;
+    box-shadow:0 0 26px 12px rgba(231,185,74,.85);transition:box-shadow .12s, background .4s, opacity .5s}
+  /* BEAM */
+  .beam{position:absolute;left:50%;bottom:calc(38% + 150px);width:520px;height:150px;transform-origin:left center;z-index:3;
+    background:linear-gradient(90deg,rgba(255,243,200,.55),rgba(231,185,74,.12) 55%,transparent 80%);
+    clip-path:polygon(0 46%,100% 0,100% 100%,0 54%);transform:translateX(0) rotate(-12deg);
+    animation:sweep 7s ease-in-out infinite;filter:blur(2px)}
+  @keyframes sweep{0%{transform:rotate(-26deg)}50%{transform:rotate(8deg)}100%{transform:rotate(-26deg)}}
+  /* HARBOR LANTERNS */
+  .lantern{position:absolute;bottom:39%;width:7px;height:7px;border-radius:50%;background:#ffdf9b;
+    box-shadow:0 0 10px 4px rgba(231,185,74,.8);z-index:4;transition:opacity 1.2s ease, box-shadow 1.2s ease}
+  /* GLINT on sea from lamp */
+  .glint{position:absolute;left:50%;bottom:18%;width:60px;height:120px;transform:translateX(-50%);z-index:3;
+    background:linear-gradient(180deg,rgba(231,185,74,.5),transparent);filter:blur(6px);opacity:.7;transition:opacity 2s}
+  /* VAEL eye/ripple hint */
+  .eye{position:absolute;left:50%;bottom:14%;width:240px;height:90px;transform:translateX(-50%) scale(.6);z-index:3;
+    border-radius:50%;background:radial-gradient(ellipse at center,rgba(231,185,74,.0) 30%,rgba(231,185,74,.22) 45%,transparent 60%);
+    opacity:0;transition:opacity 2.5s, transform 4s}
+  .eye::after{content:"";position:absolute;left:50%;top:50%;width:54px;height:54px;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(255,240,200,.5),rgba(180,120,20,.3) 50%,transparent 70%)}
+  /* TEXT */
+  .whisper{position:absolute;left:0;right:0;bottom:9%;text-align:center;z-index:6;padding:0 24px}
+  .whisper p{font-size:clamp(15px,2.4vw,22px);color:#d8cdb0;opacity:0;transform:translateY(8px);transition:opacity 1.6s, transform 1.6s;
+    text-shadow:0 2px 14px #000;font-style:italic;letter-spacing:.02em}
+  .gold{display:block;margin-top:10px;font-size:clamp(20px,4vw,40px);color:var(--gold);opacity:0;letter-spacing:.5em;
+    text-shadow:0 0 28px rgba(231,185,74,.8);transition:opacity 1.4s, letter-spacing 3s, filter 2s;font-style:normal}
+  .title{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:7;opacity:0;transition:opacity 2.2s;pointer-events:none}
+  .title .kick{font-family:'Trebuchet MS',sans-serif;letter-spacing:.42em;font-size:12px;color:var(--gold);text-transform:uppercase}
+  .title h1{font-size:clamp(26px,5vw,46px);color:#f3e6bf;margin-top:8px;text-shadow:0 4px 30px #000;letter-spacing:.02em}
+  .vignette{position:absolute;inset:0;z-index:6;pointer-events:none;box-shadow:inset 0 0 160px 50px rgba(0,0,0,.75)}
+  /* CONTROLS */
+  .ui{position:absolute;top:12px;right:14px;z-index:9;display:flex;gap:8px}
+  .btn{background:rgba(10,14,22,.75);color:var(--gold);border:1px solid var(--gold2);border-radius:8px;
+    padding:8px 14px;font-family:'Trebuchet MS',sans-serif;font-size:13px;cursor:pointer;backdrop-filter:blur(3px)}
+  .btn:hover{background:rgba(231,185,74,.15)}
+  .hint{position:absolute;left:0;right:0;top:46%;text-align:center;z-index:8;color:#cbb87a;font-family:'Trebuchet MS',sans-serif;
+    letter-spacing:.2em;font-size:13px;transition:opacity .6s}
+  .cap{max-width:920px;margin:14px auto 0;color:#7d8595;font-size:12.5px;font-style:italic;text-align:center}
+
+  /* ====== STATE TRANSITIONS ====== */
+  .stage.flicker .lamp{animation:flick .14s steps(2) 6}
+  @keyframes flick{0%{opacity:1}50%{opacity:.25}100%{opacity:1}}
+  .stage.flicker .beam{opacity:.5;filter:blur(3px)}
+  .stage.dark .lamp{background:#1a1208;box-shadow:0 0 0 0 rgba(0,0,0,0);opacity:.25}
+  .stage.dark .beam{opacity:0}
+  .stage.dark .glint{opacity:0}
+  .stage.dim .lantern{opacity:.05;box-shadow:0 0 0 0 transparent}
+  .stage.cold .sky{filter:saturate(.4) brightness(.55)}
+  .stage.cold .sea{filter:saturate(.5) brightness(.6)}
+  .stage.tide .tide{transform:translateY(8%)}
+  .stage.whisper .whisper p{opacity:1;transform:translateY(0)}
+  .stage.word .gold{opacity:1}
+  .stage.worddissolve .gold{opacity:0;letter-spacing:1.1em;filter:blur(6px)}
+  .stage.eyeon .eye{opacity:1;transform:translateX(-50%) scale(1.15)}
+  .stage.ended .title{opacity:1}
+  .stage.ended .vignette{box-shadow:inset 0 0 200px 80px rgba(0,0,0,.85)}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;bottom:14px;right:14px;z-index:9999;background:#161b29;color:#c9a227;border:1px solid #c9a227;border-radius:20px;padding:8px 14px;font-family:Trebuchet MS,sans-serif;font-size:12.5px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.35)">⌂ Indice</a>
+<div class="frame">
+<div>
+  <div class="stage" id="stage">
+    <div class="sky"></div><div class="stars"></div>
+    <div class="sea"><div class="shimmer"></div><div class="shimmer b"></div></div>
+    <div class="glint"></div>
+    <div class="beam" id="beam"></div>
+    <div class="tower"></div><div class="lamp"></div>
+    <div class="eye"></div>
+    <div class="tide"></div>
+    <div class="whisper">
+      <p data-i="0">Il Gran Faro di Selporto — la luce che non si è mai spenta — vacilla…</p>
+      <p data-i="1">…e muore. La marea sale dove dovrebbe ritirarsi.</p>
+      <p data-i="2">Nel buio, ognuno sente una voce. Col proprio stesso timbro.</p>
+      <span class="gold">VÆL</span>
+    </div>
+    <div class="title"><div class="kick">Selavia · la campagna comincia</div><h1>La Notte del Faro Spento</h1></div>
+    <div class="vignette"></div>
+    <div class="hint" id="hint">▶ clicca per cominciare</div>
+    <div class="ui"><button class="btn" id="play">↻ Replay</button></div>
+  </div>
+  <div class="cap">Animazione della scena d'apertura (cold open) — da proiettare in sessione zero. Clicca la scena o “Replay” per rivederla.</div>
+</div>
+</div>
+<script>
+(function(){
+  var st=document.getElementById('stage'), hint=document.getElementById('hint');
+  var lanternsBuilt=false;
+  function buildLanterns(){
+    if(lanternsBuilt)return; lanternsBuilt=true;
+    var xs=[14,22,30,38,46,54,62,70,78,86,42,58];
+    xs.forEach(function(x,i){
+      var l=document.createElement('div'); l.className='lantern';
+      l.style.left=x+'%'; l.style.bottom=(37+ (i%3))+'%';
+      st.insertBefore(l, document.querySelector('.tower'));
+    });
+  }
+  var T=[];
+  function clearT(){T.forEach(clearTimeout);T=[];}
+  function reset(){
+    clearT();
+    ['flicker','dark','dim','cold','tide','whisper','word','worddissolve','eyeon','ended'].forEach(function(c){st.classList.remove(c);});
+    void st.offsetWidth;
+  }
+  function play(){
+    reset(); hint.style.opacity=0;
+    T.push(setTimeout(function(){st.classList.add('flicker')},2600));
+    T.push(setTimeout(function(){st.classList.remove('flicker');st.classList.add('dark')},4400));
+    T.push(setTimeout(function(){st.classList.add('dim')},5200));
+    T.push(setTimeout(function(){st.classList.add('cold');st.classList.add('tide')},5600));
+    T.push(setTimeout(function(){st.classList.add('whisper')},7000));
+    T.push(setTimeout(function(){st.classList.add('word')},10200));
+    T.push(setTimeout(function(){st.classList.add('eyeon')},11200));
+    T.push(setTimeout(function(){st.classList.add('worddissolve')},13200));
+    T.push(setTimeout(function(){st.classList.add('ended')},15200));
+  }
+  buildLanterns();
+  st.addEventListener('click',function(e){ if(e.target.id==='play')return; play(); });
+  document.getElementById('play').addEventListener('click',play);
+})();
+</script>
+</body>
+</html>

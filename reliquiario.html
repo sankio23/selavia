@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selavia — Reliquiario</title>
+<style>
+  :root{--navy:#161b29;--navy2:#1f2538;--gold:#c9a227;--gold-soft:#e0c45a;--parch:#f6efe0;--parch2:#efe6d2;--ink:#2c2620;--ink-soft:#5b5345;--line:#d8ccae;
+    --unc:#3f7d52;--rar:#3a6ea5;--mr:#7a4a86;--art:#b8801c;--curse:#9e3b3b}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Georgia,"Iowan Old Style",serif;color:var(--ink);background:var(--parch);line-height:1.55}
+  .head{background:var(--navy);color:#fff;border-bottom:3px solid var(--gold);padding:26px 32px}
+  .head .kick{font-family:'Trebuchet MS',sans-serif;letter-spacing:.3em;font-size:11px;color:var(--gold);text-transform:uppercase}
+  .head h1{margin:6px 0 4px;font-size:27px}
+  .head .sub{color:#9aa2b4;font-size:13px;font-style:italic}
+  main{max-width:1040px;margin:24px auto 80px;padding:0 24px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .card{background:#fff;border:1px solid var(--line);border-top:5px solid var(--gold);border-radius:10px;padding:16px 18px;box-shadow:0 2px 10px rgba(20,15,5,.08);display:flex;flex-direction:column}
+  .card.unc{border-top-color:var(--unc)} .card.rar{border-top-color:var(--rar)}
+  .card.mr{border-top-color:var(--mr)} .card.art{border-top-color:var(--art)} .card.curse{border-top-color:var(--curse)}
+  .card h2{margin:0 0 3px;font-size:19px;color:#1f2538}
+  .meta{font-family:'Trebuchet MS',sans-serif;font-size:11px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:9px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .pill{padding:2px 9px;border-radius:20px;color:#fff;font-weight:bold;font-size:10.5px}
+  .pill.unc{background:var(--unc)} .pill.rar{background:var(--rar)} .pill.mr{background:var(--mr)} .pill.art{background:var(--art)} .pill.curse{background:var(--curse)}
+  .att{color:var(--ink-soft)}
+  .lore{font-style:italic;color:#6b5e3f;font-size:13.5px;margin:0 0 8px}
+  .props{margin:0;padding-left:18px;font-size:13.5px}
+  .props li{margin:5px 0}
+  .props b{font-family:'Trebuchet MS',sans-serif;font-size:11.5px;letter-spacing:.02em}
+  .hook{margin-top:10px;font-size:12.5px;color:#4a4534;background:#fbf6e8;border-left:3px solid var(--gold);padding:6px 10px;border-radius:4px}
+  .hook.plot{background:#fbeeec;border-left-color:var(--curse);color:#6b3a36}
+  .plotcard{grid-column:1/-1;border-top-color:var(--art)}
+  .anchors{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0}
+  .anchor{flex:1;min-width:220px;background:var(--parch2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px}
+  .anchor b{font-family:'Trebuchet MS',sans-serif;font-size:12px}
+  .note{max-width:1040px;margin:0 auto;padding:18px 24px 0;color:var(--ink-soft);font-size:13px;font-style:italic}
+  .foot{max-width:1040px;margin:14px auto 0;padding:0 24px;color:var(--ink-soft);font-size:13px;font-style:italic;border-top:2px solid var(--gold);padding-top:14px}
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;bottom:14px;right:14px;z-index:9999;background:#161b29;color:#c9a227;border:1px solid #c9a227;border-radius:20px;padding:8px 14px;font-family:Trebuchet MS,sans-serif;font-size:12.5px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.35)">⌂ Indice</a>
+<div class="head">
+  <div class="kick">Selavia · oggetti magici homebrew · D&amp;D 5e 2024</div>
+  <h1>Reliquiario di Selavia</h1>
+  <div class="sub">Dal non-comune all'artefatto-chiave del finale — companion della Bibbia §4–§5, §14</div>
+</div>
+<div class="note">Bilanciamento indicativo: tarate liberamente. Gli oggetti <b>[plot]</b> sono materiale riservato ai master.</div>
+<main>
+  <div class="grid">
+
+    <div class="card unc">
+      <h2>Fiala di Bruma d'Àlbora</h2>
+      <div class="meta"><span class="pill unc">Non comune</span> <span>Meraviglioso · consumabile</span></div>
+      <p class="lore">Pulviscolo dorato sospeso, caldo al tatto.</p>
+      <ul class="props">
+        <li><b>Uso (azione):</b> infrangila: bruma dorata (raggio 4,5 m, luce fioca) per 1 min. Tu e gli alleati avete <b>vantaggio ai TS contro la paura</b> e, una volta, recuperate <b>2d4+2 PF</b> entrando nella bruma.</li>
+        <li><b>Rischio dorato:</b> chi termina il minuto nella bruma: TS Costituzione CD 10 o <b>1 livello di indebolimento</b> (mal d'àlbora) fino al riposo lungo.</li>
+      </ul>
+      <div class="hook">⚙ L'àlbora cura e logora: loot comune che insegna il tema.</div>
+    </div>
+
+    <div class="card rar">
+      <h2>Lanterna Capovolta</h2>
+      <div class="meta"><span class="pill rar">Raro</span> <span class="att">Meraviglioso · sintonia</span></div>
+      <p class="lore">Lanterna di ferro che arde solo a testa in giù. Reliquia di Neretha.</p>
+      <ul class="props">
+        <li><b>Luce delle anime:</b> mentre arde, vedi spiriti e non-morti invisibili entro 9 m; <b>vantaggio ai TS contro lo spavento</b> da loro.</li>
+        <li><b>Concedere il passaggio (1/giorno):</b> parli con un defunto (morto da &lt;10 giorni, spoglie entro 9 m) e puoi liberarne lo spirito.</li>
+      </ul>
+      <div class="hook">⚙ Strumento delle prove di Neretha — aggancia il Veliero Fantasma (§14).</div>
+    </div>
+
+    <div class="card rar">
+      <h2>Bussola delle Maree Folli</h2>
+      <div class="meta"><span class="pill rar">Raro</span> <span class="att">Meraviglioso · sintonia</span></div>
+      <p class="lore">La rosa dei venti gira lentamente anche all'asciutto.</p>
+      <ul class="props">
+        <li><b>Rotte stabili:</b> ignori lo svantaggio alle prove di navigazione nei mari instabili.</li>
+        <li><b>Fiuto dell'oro (1/giorno):</b> l'ago punta al giacimento d'àlbora viva più vicino (80 km); o ritira una prova per non perderti/prevedere tempeste.</li>
+      </ul>
+      <div class="hook">⚙ Motore di esplorazione: porta le ciurme alle rovine e alle Sàlvere.</div>
+    </div>
+
+    <div class="card rar">
+      <h2>Runa di Persistenza</h2>
+      <div class="meta"><span class="pill rar">Raro</span> <span>Meraviglioso · consumabile</span></div>
+      <p class="lore">Scheggia incisa col sapere della Culla Superstite.</p>
+      <ul class="props">
+        <li><b>Imperitura:</b> un oggetto non magico (≤ Media) non può invecchiare, marcire o decadere; resiste a fuoco/acidi non magici.</li>
+        <li><b>Eco trattenuta:</b> sigilla un messaggio/suono di 1 min (anche una <i>voce</i>) riascoltabile al tocco.</li>
+      </ul>
+      <div class="hook">⚙ Una Runa può conservare la voce di un morto del Primo Splendore — un pezzo di profezia.</div>
+    </div>
+
+    <div class="card mr">
+      <h2>Cuore di Corallo</h2>
+      <div class="meta"><span class="pill mr">Molto raro</span> <span class="att">Meraviglioso · sintonia (Coralidi)</span></div>
+      <p class="lore">Nodo di corallo vivo che pulsa di luce dorata.</p>
+      <ul class="props">
+        <li><b>Rigenerazione corallina:</b> a inizio turno, se sotto metà PF (e ≥1), recuperi <b>1d6 PF</b>. Salta 1 turno dopo danni necrotici.</li>
+        <li><b>Innesto mutevole (BC, 1/riposo lungo):</b> per 1 min, velocità di scalata 9 m e attacco naturale 1d8 perforante.</li>
+      </ul>
+      <div class="hook">⚙ Per un Coralide è quasi un organo. Risuona quando Vael è vicino (§5).</div>
+    </div>
+
+    <div class="card mr">
+      <h2>Frammento di un Nome</h2>
+      <div class="meta"><span class="pill mr">Molto raro</span> <span class="att">Meraviglioso · sintonia (incantatori)</span></div>
+      <p class="lore">Scaglia di pietra-luce dall'Arca dei Nomi: vibra una sillaba di parola-vera.</p>
+      <ul class="props">
+        <li><b>Sillaba del vero (1/giorno):</b> lancia <i>comando</i> o <i>individuazione bene/male</i>; <b>oppure</b> imponi svantaggio a un TS di una creatura nominata; <b>oppure</b> percepisci una menzogna.</li>
+        <li><b>Convergenza:</b> più Frammenti sintonizzati avvicinano alla ricomposizione di un Nome intero.</li>
+      </ul>
+      <div class="hook plot">⚙ [plot] La strada verso il Nome che può legare Vael (Atto IV–V). Distribuiscili tra i due tavoli.</div>
+    </div>
+
+    <div class="card art plotcard">
+      <h2>Le Tre Ancore <span style="font-size:13px;color:#b8801c;font-weight:normal">· [plot · artefatto]</span></h2>
+      <div class="meta"><span class="pill art">Artefatto</span> <span>non in vendita · nessuna sintonia ordinaria</span></div>
+      <p class="lore">Le tre ancore metafisiche che legarono il Capitano Senza Passaggio (§14). Chi le raccoglie eredita un potere divino — e un peso.</p>
+      <div class="anchors">
+        <div class="anchor"><b>Ancora di Pietra · Gaia</b><br>Entro 30 m nessuno può teletrasportarsi o viaggiare tra i piani; a chi la tiene la terra non nega mai l'approdo.</div>
+        <div class="anchor"><b>Ancora d'Onda · Calipso</b><br>Calmi o scateni una tempesta in 1,5 km, e attraversi illeso il cuore di un uragano.</div>
+        <div class="anchor"><b>Ancora d'Ombra · Neretha</b><br>Leghi o liberi un'anima: neghi la morte a un essere, o la concedi a chi è bloccato (anche un non-morto).</div>
+      </div>
+      <ul class="props">
+        <li><b>Set — Legare un Nome:</b> unite le tre Ancore <b>e</b> un Nome intero, un rituale può <b>imprigionare un dio nascente</b> — l'unico modo noto di fermare il Secondo Evento. L'uso scorretto è catastrofico.</li>
+      </ul>
+      <div class="hook plot">⚙ [plot] Cuore meccanico della campagna: compaiono nell'Atto III (divise tra i tavoli), arma del finale (Atto V).</div>
+    </div>
+
+    <div class="card curse">
+      <h2>Eco di Vael</h2>
+      <div class="meta"><span class="pill curse">Raro · maledetto</span> <span class="att">Meraviglioso · sintonia</span></div>
+      <p class="lore">Conchiglia dorata che sussurra con una voce che sembra la <i>tua</i>.</p>
+      <ul class="props">
+        <li><b>Dono:</b> <b>+1 alla CD</b> dei tuoi incantesimi (o, se non incanti, Ispirazione Eroica a ogni riposo lungo).</li>
+        <li><b>Maledizione (occulta):</b> a fine riposo lungo, TS Saggezza CD 13 o sogni la Spirale: svantaggio ai TS contro charme/spavento. Non si lascia abbandonare finché una <i>rimuovi maledizione</i> (CD 16) non spezza il legame.</li>
+      </ul>
+      <div class="hook curse">⚙ La tentazione resa oggetto: lega lentamente i PG a Vael. Un falso aiuto perfetto.</div>
+    </div>
+
+  </div>
+</main>
+<div class="foot">Selavia — le terre della Veglia · oggetti magici homebrew. Posso generare le immagini con Pixa (a crediti ricaricati) e incorporarle, o aggiungere armi/navi magiche e una tabella di tesori d'àlbora.</div>
+</body>
+</html>

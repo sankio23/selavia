@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selavia — Compendio di Campagna</title>
+<style>
+  :root{--navy:#161b29;--navy2:#1f2538;--gold:#c9a227;--gold-soft:#e0c45a;--parch:#f6efe0;--parch2:#efe6d2;--ink:#2c2620;--ink-soft:#5b5345;--line:#d8ccae;--pg:#3f7d52;--res:#9e3b3b}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,"Iowan Old Style",serif;color:var(--ink);background:var(--parch);line-height:1.6}
+  .hero{position:relative;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;
+    background:#0c1118;color:#fff;overflow:hidden;border-bottom:4px solid var(--gold)}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+  .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,11,18,.25),rgba(8,11,18,.92))}
+  .hero .inner{position:relative;padding:40px 8vw 34px;max-width:1100px;margin:0 auto;width:100%}
+  .hero .kick{font-family:'Trebuchet MS',sans-serif;letter-spacing:.4em;font-size:12px;color:var(--gold);text-transform:uppercase}
+  .hero h1{font-size:clamp(34px,6vw,60px);letter-spacing:.04em;margin:8px 0 6px;text-shadow:0 4px 30px #000}
+  .hero p{color:#cdd2dc;font-style:italic;max-width:680px;font-size:15.5px}
+  main{max-width:1100px;margin:0 auto;padding:34px 8vw 90px}
+  .intro{font-size:15.5px;color:var(--ink-soft);max-width:820px;margin-bottom:8px}
+  .legendline{font-family:'Trebuchet MS',sans-serif;font-size:12px;color:var(--ink-soft);margin:14px 0 26px;display:flex;gap:18px;flex-wrap:wrap}
+  .b{display:inline-block;font-size:10.5px;letter-spacing:.05em;padding:2px 9px;border-radius:20px}
+  .b.pg{background:#e6f0e8;color:var(--pg);border:1px solid #bcd7c3}
+  .b.res{background:#f3e3e0;color:var(--res);border:1px solid #e0c0bb}
+  .b.mix{background:#fbf2dd;color:#8a6d12;border:1px solid #e6d39a}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  a.card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-top:5px solid var(--gold);
+    border-radius:12px;padding:18px 20px;text-decoration:none;color:inherit;box-shadow:0 2px 10px rgba(20,15,5,.08);transition:transform .12s,box-shadow .12s}
+  a.card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(20,15,5,.16)}
+  .card .ic{font-size:30px;margin-bottom:8px}
+  .card h2{font-size:20px;color:#1f2538;margin-bottom:4px}
+  .card .d{font-size:13.7px;color:var(--ink-soft);flex:1}
+  .card .tag{margin-top:12px}
+  .card .go{margin-top:10px;font-family:'Trebuchet MS',sans-serif;font-size:12.5px;color:#8a6d12;font-weight:bold}
+  .sec-h{font-family:'Trebuchet MS',sans-serif;letter-spacing:.16em;text-transform:uppercase;font-size:12.5px;color:#8a6d12;margin:30px 0 12px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  footer{max-width:1100px;margin:0 auto;padding:0 8vw 60px;color:var(--ink-soft);font-size:13px;font-style:italic}
+</style>
+</head>
+<body>
+<div class="hero">
+  <img src="mappa.jpg" alt="Mappa di Selavia">
+  <div class="shade"></div>
+  <div class="inner">
+    <div class="kick">Le terre della Veglia · campagna D&amp;D 5e 2024</div>
+    <h1>Selavia</h1>
+    <p>Compendio di campagna: un mondo vivo e persistente, 10 giocatori, 2 master, due regioni intrecciate. Tutto il materiale in un solo posto.</p>
+  </div>
+</div>
+<main>
+  <p class="intro">Benvenuto, master. Da qui accedi a ogni documento di Selavia. Le pagine segnate <span class="b pg">giocatori</span> si possono mostrare al tavolo; quelle <span class="b res">riservato</span> contengono segreti da tenere per i master.</p>
+  <div class="legendline">
+    <span><span class="b pg">giocatori</span> condivisibile al tavolo</span>
+    <span><span class="b res">riservato</span> solo master</span>
+    <span><span class="b mix">misto</span> in parte mostrabile</span>
+  </div>
+
+  <div class="sec-h">Per cominciare</div>
+  <div class="grid">
+    <a class="card" href="bibbia.html"><div class="ic">📖</div><h2>Bibbia di Campagna</h2><div class="d">La World Bible: storia profonda, geografia, stirpi, religione, fazioni, il segreto di Vael, l'architettura a due tavoli. Con illustrazioni.</div><div class="tag"><span class="b mix">misto</span></div><div class="go">Apri →</div></a>
+    <a class="card" href="avvio.html"><div class="ic">🪔</div><h2>Avvio &amp; Sessione Zero</h2><div class="d">Come parte la storia: "La Notte del Faro Spento", l'occasione, i ganci personali e lo sdoppiamento delle due ciurme.</div><div class="tag"><span class="b res">riservato</span></div><div class="go">Apri →</div></a>
+    <a class="card" href="faro.html"><div class="ic">🎬</div><h2>La Notte del Faro Spento</h2><div class="d">L'animazione della scena d'apertura, da proiettare in sessione zero. Clic per riprodurla.</div><div class="tag"><span class="b pg">giocatori</span></div><div class="go">Riproduci →</div></a>
+  </div>
+
+  <div class="sec-h">I giocatori</div>
+  <div class="grid">
+    <a class="card" href="guida-pg.html"><div class="ic">⚔️</div><h2>Guida alla Creazione dei PG</h2><div class="d">5e 2024, livello 1: le tre stirpi homebrew, i background di Selavia, ciurme e legami, checklist. Da dare ai 10 giocatori.</div><div class="tag"><span class="b pg">giocatori</span></div><div class="go">Apri →</div></a>
+    <a class="card" href="reliquiario.html"><div class="ic">💎</div><h2>Reliquiario</h2><div class="d">Oggetti magici homebrew, dal non-comune all'artefatto: àlbora, Lanterna Capovolta, le tre Ancore e altro.</div><div class="tag"><span class="b mix">misto</span></div><div class="go">Apri →</div></a>
+  </div>
+
+  <div class="sec-h">Regia (solo master)</div>
+  <div class="grid">
+    <a class="card" href="archi.html"><div class="ic">🗺️</div><h2>Archi Narrativi dei Due Tavoli</h2><div class="d">5 atti paralleli per Selmàra e Vàlmera, con il motore delle intersezioni e i crossing atto per atto.</div><div class="tag"><span class="b res">riservato</span></div><div class="go">Apri →</div></a>
+    <a class="card" href="dossier-png.html"><div class="ic">🎭</div><h2>Dossier dei PNG</h2><div class="d">Le sei figure cardine: ruolo, segreti, ganci verso l'altro tavolo e statblock suggeriti.</div><div class="tag"><span class="b res">riservato</span></div><div class="go">Apri →</div></a>
+  </div>
+
+  <div class="sec-h">Mappa</div>
+  <div class="grid">
+    <a class="card" href="mappa.jpg"><div class="ic">🧭</div><h2>Mappa delle Fasce</h2><div class="d">Le quattro fasce concentriche: la Spirale, le Sàlvere, il Cinto (le due regioni), l'Orlo.</div><div class="tag"><span class="b pg">giocatori</span></div><div class="go">Apri immagine →</div></a>
+  </div>
+</main>
+<footer>Selavia — le terre della Veglia · compendio di campagna · D&amp;D 5e 2024 · per Cose &amp; Marco.</footer>
+</body>
+</html>

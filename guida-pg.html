@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selavia — Creazione dei Personaggi</title>
+<style>
+  :root{
+    --navy:#161b29; --navy2:#1f2538; --gold:#c9a227; --gold-soft:#e0c45a;
+    --parch:#f6efe0; --parch2:#efe6d2; --ink:#2c2620; --ink-soft:#5b5345;
+    --pg:#3f7d52; --pg-bg:#e6f0e8; --res:#9e3b3b; --res-bg:#f3e3e0; --line:#d8ccae;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Georgia,"Iowan Old Style",serif;color:var(--ink);background:var(--parch);line-height:1.65}
+  a{color:#8a6d12;text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{display:flex;min-height:100vh}
+  #sidebar{width:310px;flex:0 0 310px;background:var(--navy);color:#cdd2dc;position:sticky;top:0;height:100vh;overflow-y:auto;border-right:3px solid var(--gold)}
+  .brand{padding:26px 22px 18px;border-bottom:1px solid #2b3247}
+  .brand .kick{font-family:'Trebuchet MS',sans-serif;letter-spacing:.28em;font-size:11px;color:var(--gold);text-transform:uppercase}
+  .brand h1{margin:6px 0 2px;font-size:23px;color:#fff;letter-spacing:.5px;line-height:1.2}
+  .brand .sub{font-size:12.5px;color:#8b93a6;font-style:italic}
+  .searchbox{padding:14px 18px;border-bottom:1px solid #2b3247}
+  #search{width:100%;padding:9px 12px;border-radius:7px;border:1px solid #39415a;background:#0f1320;color:#eee;font-size:14px;font-family:inherit}
+  #search::placeholder{color:#6b7488}
+  #count{font-size:11.5px;color:#8b93a6;margin-top:7px;display:block;min-height:14px}
+  nav{padding:10px 0 40px}
+  nav a{display:block;color:#b7bdca;padding:7px 22px;font-size:13.5px;border-left:3px solid transparent;font-family:'Trebuchet MS',sans-serif}
+  nav a:hover{background:#1c2336;color:#fff;text-decoration:none}
+  nav a.active{border-left-color:var(--gold);color:var(--gold-soft);background:#1c2336}
+  nav .num{color:var(--gold);font-weight:bold;margin-right:8px;font-size:12.5px}
+  nav .grp{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5b637a;padding:16px 22px 6px}
+  main{flex:1;min-width:0;max-width:860px;margin:0 auto;padding:40px 52px 120px}
+  .topnote{background:var(--parch2);border:1px solid var(--line);border-left:4px solid var(--gold);padding:14px 18px;border-radius:6px;font-size:14.5px;font-style:italic;color:var(--ink-soft);margin-bottom:34px}
+  section{margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  h2.sec{font-size:24px;color:#1f2538;margin:30px 0 4px;cursor:pointer;display:flex;align-items:baseline;gap:12px;user-select:none}
+  h2.sec .n{color:var(--gold);font-size:18px;font-weight:bold;flex:0 0 auto}
+  h2.sec .caret{margin-left:auto;font-size:15px;color:var(--ink-soft);transition:transform .2s}
+  section.collapsed h2.sec .caret{transform:rotate(-90deg)}
+  .body{overflow:hidden}section.collapsed .body{display:none}
+  h3{font-size:17.5px;color:#3a3326;margin:20px 0 5px}
+  h4{font-size:15px;color:#5b5345;margin:14px 0 4px;font-family:'Trebuchet MS',sans-serif;letter-spacing:.3px}
+  p{margin:9px 0}ul,ol{margin:9px 0 9px 4px;padding-left:22px}li{margin:5px 0}
+  .badge{display:inline-block;font-family:'Trebuchet MS',sans-serif;font-size:10.5px;letter-spacing:.06em;padding:2px 9px;border-radius:20px;vertical-align:middle;font-style:normal;margin-left:6px;position:relative;top:-2px}
+  .badge.pg{background:var(--pg-bg);color:var(--pg);border:1px solid #bcd7c3}
+  .badge.res{background:var(--res-bg);color:var(--res);border:1px solid #e0c0bb}
+  .leva{background:#fbf6e8;border:1px solid var(--gold);border-radius:8px;padding:14px 18px 14px 46px;margin:16px 0;position:relative;font-size:14.5px}
+  .leva::before{content:"⚙";position:absolute;left:15px;top:13px;font-size:19px;color:var(--gold)}
+  .leva .t{font-family:'Trebuchet MS',sans-serif;font-weight:bold;color:#8a6d12;letter-spacing:.04em;display:block;margin-bottom:5px;font-size:13px;text-transform:uppercase}
+  .race{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:8px;padding:14px 18px;margin:14px 0}
+  .race h3{margin-top:0;color:#1f2538}
+  .stat{font-family:'Trebuchet MS',sans-serif;font-size:12px;color:var(--ink-soft);margin:2px 0 8px}
+  .steps{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-family:'Trebuchet MS',sans-serif}
+  .steps .step{background:var(--navy2);color:#f0e8d4;border-radius:7px;padding:8px 13px;font-size:13px}
+  .steps .arr{color:var(--gold);font-weight:bold}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13px;background:#fff}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--navy2);color:#f0e8d4;font-family:'Trebuchet MS',sans-serif;font-weight:600;letter-spacing:.3px}
+  tr:nth-child(even) td{background:var(--parch2)}
+  .lead{font-size:16px}em{color:#6b5e3f}
+  .check li{list-style:none;margin-left:-18px}
+  .check li::before{content:"☐ ";color:var(--gold);font-weight:bold}
+  .footer{margin-top:40px;font-size:13px;color:var(--ink-soft);font-style:italic;border-top:2px solid var(--gold);padding-top:18px}
+  mark{background:#ffe8a0;color:inherit;padding:0 1px;border-radius:2px}
+  #menubtn{display:none}
+  @media(max-width:880px){
+    .wrap{flex-direction:column}
+    #sidebar{position:fixed;left:0;top:0;width:84%;max-width:320px;z-index:50;transform:translateX(-105%);transition:transform .25s;height:100vh}
+    #sidebar.open{transform:translateX(0)}
+    #menubtn{display:flex;align-items:center;gap:8px;position:fixed;top:12px;left:12px;z-index:60;background:var(--navy);color:var(--gold);border:1px solid var(--gold);border-radius:8px;padding:9px 13px;font-size:14px;font-family:'Trebuchet MS',sans-serif;cursor:pointer}
+    main{padding:64px 20px 100px;max-width:100%}
+    #backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}#backdrop.show{display:block}
+  }
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;bottom:14px;right:14px;z-index:9999;background:#161b29;color:#c9a227;border:1px solid #c9a227;border-radius:20px;padding:8px 14px;font-family:Trebuchet MS,sans-serif;font-size:12.5px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.35)">⌂ Indice</a>
+<button id="menubtn">☰ Indice</button>
+<div id="backdrop"></div>
+<div class="wrap">
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="kick">Selavia · D&amp;D 5e 2024</div>
+    <h1>Creazione dei Personaggi</h1>
+    <div class="sub">Sessione zero · 10 giocatori · livello 1</div>
+  </div>
+  <div class="searchbox">
+    <input id="search" type="search" placeholder="🔍 Cerca…" autocomplete="off">
+    <span id="count"></span>
+  </div>
+  <nav id="toc"></nav>
+</aside>
+
+<main id="content">
+  <div class="topnote">Handout di <b>sessione zero</b> per i 10 giocatori. Sistema <b>D&amp;D 5e 2024</b>, partenza <b>livello 1</b>. Le sezioni <span class="badge pg">per i giocatori</span> sono libere; <span class="badge res">per i master</span> sono note di regia. &nbsp;·&nbsp; Clicca un titolo per chiudere/aprire.</div>
+
+  <section id="s0" data-title="0. In breve">
+    <h2 class="sec"><span class="n">0</span> In breve — cosa stai per creare <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <p class="lead">Sei un <b>pirata di Selavia</b>, le terre della Veglia: isole nate dalla frattura di un continente, dove il mare è instabile, l'oro vivo (<em>àlbora</em>) brilla nelle rocce e il vero tesoro è il <b>passato perduto</b> del mondo. La tua ciurma solca l'arcipelago.</p>
+      <p>Creeremo il personaggio in <b>quattro passi</b> (ordine 2024):</p>
+      <div class="steps"><span class="step">1 · Classe</span><span class="arr">→</span><span class="step">2 · Origine (Background + Stirpe)</span><span class="arr">→</span><span class="step">3 · Punteggi</span><span class="arr">→</span><span class="step">4 · Dettagli &amp; ciurma</span></div>
+      <p>Non serve conoscere le regole: il master ti guida. Bastano un'<b>idea</b> e una <b>voglia</b>.</p>
+    </div>
+  </section>
+
+  <section id="s1" data-title="1. Il mondo in 6 righe">
+    <h2 class="sec"><span class="n">1</span> Il mondo in 6 righe <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <ul>
+        <li><b>Lo Schianto.</b> Una meteora, l'<b>Albore</b>, spezzò il continente in un arcipelago. Tre giorni di buio: la <b>Veglia Lunga</b>. Oggi è l'anno <b>290 d.V.</b></li>
+        <li><b>L'àlbora.</b> La luce dell'Albore resta nelle pietre (<em>àlbora viva</em>), nell'acqua e nell'aria: alimenta fari, rotte e magia. La risorsa più contesa del mondo.</li>
+        <li><b>Il prima.</b> Una civiltà perduta, il <b>Primo Splendore</b>, predisse la catastrofe e costruì le <b>Culle</b>. Da tre Culle superstiti nascono le tre stirpi.</li>
+        <li><b>Gli dèi.</b> Nati dai miti resi reali: <b>Gaia</b> (terra), <b>Calipso</b> (mare), <b>Neretha</b> (trapasso, la lanterna capovolta).</li>
+        <li><b>Le rotte.</b> Venti e correnti cambiano: navigare è un'arte e un azzardo.</li>
+        <li><b>Qualcosa si muove.</b> Nella Spirale, al centro dell'arcipelago, un'antica presenza si sta destando.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s2" data-title="2. Passo 1 — La Classe">
+    <h2 class="sec"><span class="n">2</span> Passo 1 — La Classe <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <p>Tutte le classi 2024 sono ammesse; vanno solo "vestite" col mondo.</p>
+      <table>
+        <thead><tr><th>Classe</th><th>In Selavia</th></tr></thead>
+        <tbody>
+          <tr><td><b>Guerriero / Barbaro</b></td><td>Spadaccino di ciurma, bucaniere, guerriero abissale</td></tr>
+          <tr><td><b>Ladro / Mariuolo</b></td><td>Contrabbandiere, tombarolo di rovine, navigatore furtivo</td></tr>
+          <tr><td><b>Bardo</b></td><td>Cantastorie, Narratore della Memoria, ciarlatano di porto</td></tr>
+          <tr><td><b>Chierico / Paladino</b></td><td>Devoto di Gaia/Calipso/Neretha, giurato del mare</td></tr>
+          <tr><td><b>Druido / Ranger</b></td><td>Lettore di maree, cacciatore d'isole, guardiano delle coste</td></tr>
+          <tr><td><b>Mago / Stregone / Warlock</b></td><td>Studioso del Primo Splendore; il <em>patrono</em> può essere il mare, un dio o <b>Vael</b></td></tr>
+          <tr><td><b>Monaco</b></td><td>Disciplina abissale, ordine ascetico dei Custodi</td></tr>
+        </tbody>
+      </table>
+      <div class="leva"><span class="t">master</span>Nessuna restrizione dura. L'<b>Artefice</b> è perfetto come erede della tecnologia-magia del Primo Splendore. Patti del Warlock e domini del Chierico sono ottimi ganci col mistero centrale.</div>
+    </div>
+  </section>
+
+  <section id="s3" data-title="3. Passo 2a — Le tre Stirpi">
+    <h2 class="sec"><span class="n">3</span> Passo 2a — Le tre Stirpi native <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <p>Nel 2024 la <b>specie dà solo tratti</b> (i bonus ai punteggi arrivano dal Background). Le tre stirpi native discendono dalle Culle. <em>(Specie D&amp;D classica? Vedi §5.)</em></p>
+      <div class="race">
+        <h3>Umani — i Superstiti <span style="font-weight:normal;font-size:13px;color:#8b7a4a">(Culla Superstite)</span></h3>
+        <div class="stat">Umanoide · Media · velocità 9 m</div>
+        <ul>
+          <li><b>Eredità Versatile.</b> Ottieni un <b>talento di Origine</b> a scelta (oltre a quello del Background).</li>
+          <li><b>Mente d'Archivio.</b> Competenza in un'<b>abilità</b> a scelta. 1/riposo lungo, se fallisci una prova di Intelligenza (Arcano, Religione, Storia, Natura) puoi trattare il d20 come un <b>10</b>.</li>
+          <li><b>Tempra dei Sopravvissuti.</b> A fine riposo lungo ottieni <b>Ispirazione Eroica</b>.</li>
+        </ul>
+      </div>
+      <div class="race">
+        <h3>Abissali — uomini-pesce <span style="font-weight:normal;font-size:13px;color:#8b7a4a">(Culla Abissale)</span></h3>
+        <div class="stat">Umanoide · Media · velocità 9 m, nuotare 9 m</div>
+        <ul>
+          <li><b>Anfibio.</b> Respiri aria e acqua.</li>
+          <li><b>Occhi Abissali.</b> Scurovisione 18 m (36 m mentre sei immerso).</li>
+          <li><b>Disciplina Marziale.</b> Competenza in <b>due armi da guerra</b>; nessuno svantaggio in mischia quando combatti <b>sott'acqua</b>.</li>
+          <li><b>Sangue Freddo.</b> <b>Resistenza</b> ai danni da freddo.</li>
+        </ul>
+      </div>
+      <div class="race">
+        <h3>Coralidi — esseri di corallo <span style="font-weight:normal;font-size:13px;color:#8b7a4a">(Culla Frantumata)</span></h3>
+        <div class="stat">Umanoide · Media o Piccola · velocità 9 m</div>
+        <ul>
+          <li><b>Esoscheletro Corallino.</b> Senza armatura, la tua <b>CA base è 13 + mod. Destrezza</b>.</li>
+          <li><b>Innesto Mutevole.</b> Con un'<b>azione bonus</b> rimodelli un arto: <b>velocità di scalata</b> 9 m <em>oppure</em> un <b>attacco naturale</b> (1d6 + For/Des, contundente/perforante). Usi = bonus di competenza per riposo lungo.</li>
+          <li><b>Affinità con l'àlbora.</b> Conosci un <b>trucchetto</b> da Druido o Mago (caratteristica a scelta tra Int/Sag/Car). Percepisci l'<b>àlbora viva</b> entro 9 m.</li>
+        </ul>
+      </div>
+      <div class="leva"><span class="t">master · bilanciamento</span>Calibrate sul livello delle specie ufficiali 2024 (Umani ≈ Umano; Abissali ≈ Triton; Coralidi ≈ armatura naturale + utility). I <b>meticci</b> scelgono i tratti di una delle due stirpi (non si sommano). <em>Eco di Vael:</em> i Coralidi a volte sentono la Voce — gancio narrativo, non meccanico.</div>
+    </div>
+  </section>
+
+  <section id="s4" data-title="4. Passo 2b — Il Background">
+    <h2 class="sec"><span class="n">4</span> Passo 2b — Il Background <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <p>In 2024 il Background dà: <b>+2/+1</b> (o +1/+1/+1) tra tre caratteristiche, un <b>talento di Origine</b>, <b>2 abilità</b>, <b>1 strumento</b> ed equipaggiamento. Sei background di Selavia:</p>
+      <table>
+        <thead><tr><th>Background</th><th>Caratteristiche</th><th>Talento di Origine</th><th>Abilità</th><th>Strumento</th></tr></thead>
+        <tbody>
+          <tr><td><b>Marinaio di ciurma</b></td><td>For/Des/Sag</td><td>Temprato</td><td>Atletica, Percezione</td><td>Strum. da navigatore</td></tr>
+          <tr><td><b>Minatore d'àlbora</b></td><td>Cos/For/Sag</td><td>Robusto / Crafter</td><td>Sopravvivenza, Intuizione</td><td>Strum. da artigiano</td></tr>
+          <tr><td><b>Pellegrino dei Voti</b> <em>(Vàlmera)</em></td><td>Sag/Car/Int</td><td>Iniziato alla Magia (Chierico)</td><td>Religione, Intuizione</td><td>Kit da erborista</td></tr>
+          <tr><td><b>Tombarolo di rovine</b> <em>(Vàlmera)</em></td><td>Des/Int/Sag</td><td>Esperto</td><td>Indagare, Furtività</td><td>Arnesi da scasso</td></tr>
+          <tr><td><b>Contrabbandiere</b> <em>(Selmàra)</em></td><td>Car/Des/Int</td><td>Fortunato</td><td>Inganno, Persuasione</td><td>Set da gioco / falsari</td></tr>
+          <tr><td><b>Toccato dall'àlbora</b> <em>(Soglia)</em></td><td>Cos/Sag/Car</td><td>Iniziato alla Magia</td><td>Arcano, Sopravvivenza</td><td>Strum. da navigatore</td></tr>
+        </tbody>
+      </table>
+      <div class="leva"><span class="t">master</span>Sono i tre "modi di vivere" resi meccanica: <em>Rotta</em> (Marinaio, Contrabbandiere), <em>Pietra</em> (Minatore), <em>Soglia</em> (Pellegrino, Tombarolo, Toccato). Griglia, non gabbia: i mix si ribilanciano insieme.</div>
+    </div>
+  </section>
+
+  <section id="s5" data-title="5. Specie rare">
+    <h2 class="sec"><span class="n">5</span> Specie rare (le altre razze) <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <p>Vuoi una specie classica (elfo, nano, tiefling…)? Si può: in Selavia sono <b>rarità</b>. Scegli <em>da dove vieni</em>:</p>
+      <ul>
+        <li><b>Discendente di una Culla minore perduta</b> — un esperimento sociale di cui resta solo la tua stirpe.</li>
+        <li><b>Straniero</b> dalle terre oltre l'<b>Orlo</b>, ai margini dell'arcipelago.</li>
+        <li><b>Relitto del vecchio mondo</b> risvegliato (costrutti, non-morti gentili, fey del Primo Splendore).</li>
+      </ul>
+      <p>Usi i tratti ufficiali 2024 della tua specie e concordi col master una riga di origine.</p>
+    </div>
+  </section>
+
+  <section id="s6" data-title="6. Passo 3 — Punteggi">
+    <h2 class="sec"><span class="n">6</span> Passo 3 — I Punteggi <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <p>Per equità e velocità (siamo in 10, alcuni nuovi) usiamo <b>uno</b> di questi due metodi — niente tiri di dado:</p>
+      <ul>
+        <li><b>Standard array:</b> 15, 14, 13, 12, 10, 8 — assegnali come vuoi.</li>
+        <li><b>Point-buy:</b> 27 punti (regole standard 2024).</li>
+      </ul>
+      <p>Poi applichi gli aumenti del <b>Background</b>. A livello 1 nessuna caratteristica supera <b>17</b> prima dei bonus.</p>
+      <div class="leva"><span class="t">master</span>Standard array per i nuovi (rapido); point-buy per chi ottimizza. Stesso metodo coerente tra i due tavoli.</div>
+    </div>
+  </section>
+
+  <section id="s7" data-title="7. Passo 4 — Legami e ciurma">
+    <h2 class="sec"><span class="n">7</span> Passo 4 — Dettagli, legami e ciurma <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <h4>7.1 Le due ciurme</h4>
+      <p>I 10 giocatori formano <b>due ciurme da 5</b>, una per regione. <b>I master assegnano</b> i gruppi e li comunicano in sessione zero.</p>
+      <ul>
+        <li><b>Ciurma di Selmàra</b> (T1, Settentrione) — tono avventuroso/mercantile (<em>One Piece / Pirati dei Caraibi</em>).</li>
+        <li><b>Ciurma di Vàlmera</b> (T2, Meridione) — tono misterico/sacro (<em>Elden Ring / mito</em>).</li>
+      </ul>
+      <p>Ogni ciurma definisce insieme: <b>nome della nave</b>, <b>reputazione</b>, <b>obiettivo comune</b>.</p>
+      <h4>7.2 Tre domande per ogni personaggio</h4>
+      <ol>
+        <li><b>Perché sei in mare?</b> (debito, fuga, vendetta, fame di scoperta, fede, esilio…)</li>
+        <li><b>Cosa cerchi nel passato del mondo?</b> (un nome, una reliquia, una verità, una persona…)</li>
+        <li><b>Cosa temi che si stia svegliando?</b> (un primo legame col mistero della Spirale.)</li>
+      </ol>
+      <h4>7.3 Legami interni alla ciurma</h4>
+      <p>Ogni PG stabilisce <b>un legame</b> con almeno due compagni: chi ti ha salvato, con chi hai un conto in sospeso, di chi ti fidi ciecamente.</p>
+      <div class="leva"><span class="t">master · legami incrociati</span>Per alimentare l'intreccio (Bibbia §15), seminate <b>2–3 legami tra le ciurme</b>: un fratello su una nave e una sorella sull'altra; un debito tra capitani; un maestro comune; una reliquia che entrambe cercano. Due frasi che pagano enormi dividendi.</div>
+    </div>
+  </section>
+
+  <section id="s8" data-title="8. Riepilogo livello 1">
+    <h2 class="sec"><span class="n">8</span> Riepilogo meccanico di livello 1 <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <ul>
+        <li><b>Punti ferita:</b> massimo del Dado Vita della classe + mod. Costituzione.</li>
+        <li><b>Competenze:</b> classe + background (§4) + stirpe (Umani).</li>
+        <li><b>Talenti di Origine:</b> dal background (tutti) + uno extra (Umani).</li>
+        <li><b>Equipaggiamento:</b> di classe + background, oppure oro iniziale.</li>
+        <li><b>Lingue:</b> Comune + 2 (una può essere una lingua morta del Primo Splendore: utile per le rovine).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s9" data-title="9. Agenda della Sessione Zero">
+    <h2 class="sec"><span class="n">9</span> Agenda della Sessione Zero <span class="badge res">master</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <ol>
+        <li><b>Presentare mondo</b> (§1) e <b>tono</b> (10 min). Mostrare il sito della Bibbia.</li>
+        <li><b>Strumenti di sicurezza:</b> concordare <em>linee e veli</em> e una "carta X". Breve, ma fatelo.</li>
+        <li><b>Annunciare le due ciurme</b> (assegnazione 5+5) e i due master.</li>
+        <li><b>Creazione PG</b> in parallelo, tavolo per tavolo (§2–§7), coi master che girano.</li>
+        <li><b>Legami</b> interni e <b>incrociati</b> (§7.3).</li>
+        <li><b>Battezzare le navi</b> e definire reputazione e obiettivo di ciurma.</li>
+        <li><b>Gancio comune:</b> stesso "primo sintomo" del risveglio a entrambe le ciurme (Bibbia §9).</li>
+      </ol>
+      <div class="leva"><span class="t">master novizio — Cose</span>Per il tuo tavolo (Selmàra), porta 5 <b>"pre-concept" pronti</b> (classe + idea) da proporre agli indecisi: dimezza tempi e ansia da foglio bianco.</div>
+    </div>
+  </section>
+
+  <section id="s10" data-title="10. Checklist del personaggio">
+    <h2 class="sec"><span class="n">10</span> Checklist del personaggio <span class="badge pg">giocatori</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <ul class="check">
+        <li>Classe scelta (liv. 1)</li>
+        <li>Stirpe (Umani / Abissali / Coralidi / specie rara) e tratti annotati</li>
+        <li>Background: +2/+1, talento di Origine, 2 abilità, 1 strumento</li>
+        <li>Punteggi (standard array o point-buy) + aumenti del background</li>
+        <li>PF, CA, tiri salvezza, competenze</li>
+        <li>Talenti, trucchetti/incantesimi se previsti</li>
+        <li>Equipaggiamento e lingue</li>
+        <li>Le tre domande (§7.2) e i legami (§7.3)</li>
+        <li>Nome, aspetto, un dettaglio memorabile</li>
+      </ul>
+      <div class="footer">Prossimi: 5 pre-concept per la ciurma del novizio · schede stirpe stampabili · Kit Sessione Zero · prima avventura di Vàlmera "in scatola". &nbsp;—&nbsp; <em>Selavia, le terre della Veglia.</em></div>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+(function(){
+  var groups=[
+    {label:"Inizia qui",ids:["s0","s1"]},
+    {label:"Creazione del PG",ids:["s2","s3","s4","s5","s6","s7","s8"]},
+    {label:"Per i master",ids:["s9"]},
+    {label:"Checklist",ids:["s10"]}
+  ];
+  var toc=document.getElementById('toc'), secs=[].slice.call(document.querySelectorAll('section'));
+  groups.forEach(function(g){
+    var h=document.createElement('div');h.className='grp';h.textContent=g.label;toc.appendChild(h);
+    g.ids.forEach(function(id){
+      var s=document.getElementById(id);if(!s)return;
+      var t=s.getAttribute('data-title'); var m=t.match(/^(\d+)\.\s*(.*)$/);
+      var a=document.createElement('a');a.href='#'+id;a.dataset.target=id;
+      a.innerHTML='<span class="num">'+(m?m[1]:'')+'</span>'+(m?m[2]:t);
+      toc.appendChild(a);
+    });
+  });
+  var links=[].slice.call(toc.querySelectorAll('a'));
+  secs.forEach(function(s){var h=s.querySelector('h2.sec');h.addEventListener('click',function(){s.classList.toggle('collapsed');});});
+  var sb=document.getElementById('sidebar'),mb=document.getElementById('menubtn'),bd=document.getElementById('backdrop');
+  function closeM(){sb.classList.remove('open');bd.classList.remove('show');}
+  mb.addEventListener('click',function(){sb.classList.toggle('open');bd.classList.toggle('show');});
+  bd.addEventListener('click',closeM);links.forEach(function(a){a.addEventListener('click',closeM);});
+  var spy=function(){var pos=window.scrollY+120,cur=secs[0].id;secs.forEach(function(s){if(s.offsetTop<=pos)cur=s.id;});links.forEach(function(a){a.classList.toggle('active',a.dataset.target===cur);});};
+  window.addEventListener('scroll',spy,{passive:true});spy();
+  var input=document.getElementById('search'),count=document.getElementById('count');
+  function clearMarks(root){root.querySelectorAll('mark').forEach(function(m){var p=m.parentNode;p.replaceChild(document.createTextNode(m.textContent),m);p.normalize();});}
+  function markIn(node,re){
+    var walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT,null),texts=[],found=0;
+    while(walker.nextNode())texts.push(walker.currentNode);
+    texts.forEach(function(tn){
+      if(tn.parentNode&&/^(SCRIPT|STYLE)$/.test(tn.parentNode.nodeName))return;
+      var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;
+      var frag=document.createDocumentFragment(),last=0,m;
+      while((m=re.exec(s))){
+        if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+        var mk=document.createElement('mark');mk.textContent=m[0];frag.appendChild(mk);
+        last=m.index+m[0].length;found++;if(m.index===re.lastIndex)re.lastIndex++;
+      }
+      if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));
+      tn.parentNode.replaceChild(frag,tn);
+    });
+    return found;
+  }
+  var t;
+  input.addEventListener('input',function(){clearTimeout(t);t=setTimeout(run,140);});
+  function run(){
+    var q=input.value.trim();secs.forEach(function(s){clearMarks(s);});
+    if(!q){secs.forEach(function(s){s.style.display='';});count.textContent='';return;}
+    var esc=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');var total=0,visible=0;
+    secs.forEach(function(s){
+      if(s.classList.contains('collapsed'))s.classList.remove('collapsed');
+      var n=markIn(s,new RegExp(esc,'gi'));
+      if(n>0){s.style.display='';visible++;total+=n;}else{s.style.display='none';}
+    });
+    count.textContent=total?(total+' risultati · '+visible+' sezioni'):'Nessun risultato';
+  }
+})();
+</script>
+</body>
+</html>

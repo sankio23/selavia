@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selavia — Archi Narrativi dei Due Tavoli</title>
+<style>
+  :root{--navy:#161b29;--navy2:#1f2538;--gold:#c9a227;--gold-soft:#e0c45a;--parch:#f6efe0;--parch2:#efe6d2;--ink:#2c2620;--ink-soft:#5b5345;--line:#d8ccae;
+    --sel:#2f7f84;--sel-bg:#e4f0f0;--val:#7a4a86;--val-bg:#efe6f1;--res:#9e3b3b}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Georgia,"Iowan Old Style",serif;color:var(--ink);background:var(--parch);line-height:1.6}
+  a{color:#8a6d12;text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{display:flex;min-height:100vh}
+  #sidebar{width:300px;flex:0 0 300px;background:var(--navy);color:#cdd2dc;position:sticky;top:0;height:100vh;overflow-y:auto;border-right:3px solid var(--gold)}
+  .brand{padding:24px 22px 16px;border-bottom:1px solid #2b3247}
+  .brand .kick{font-family:'Trebuchet MS',sans-serif;letter-spacing:.26em;font-size:11px;color:var(--gold);text-transform:uppercase}
+  .brand h1{margin:6px 0 2px;font-size:21px;color:#fff;line-height:1.2}
+  .brand .sub{font-size:12px;color:#8b93a6;font-style:italic}
+  .searchbox{padding:13px 18px;border-bottom:1px solid #2b3247}
+  #search{width:100%;padding:9px 12px;border-radius:7px;border:1px solid #39415a;background:#0f1320;color:#eee;font-size:14px;font-family:inherit}
+  #search::placeholder{color:#6b7488}
+  #count{font-size:11.5px;color:#8b93a6;margin-top:7px;display:block;min-height:14px}
+  nav{padding:10px 0 40px}
+  nav a{display:block;color:#b7bdca;padding:7px 22px;font-size:13.5px;border-left:3px solid transparent;font-family:'Trebuchet MS',sans-serif}
+  nav a:hover{background:#1c2336;color:#fff;text-decoration:none}
+  nav a.active{border-left-color:var(--gold);color:var(--gold-soft);background:#1c2336}
+  nav .num{color:var(--gold);font-weight:bold;margin-right:8px;font-size:12.5px}
+  nav .grp{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#5b637a;padding:16px 22px 6px}
+  main{flex:1;min-width:0;max-width:960px;margin:0 auto;padding:38px 48px 120px}
+  .topnote{background:var(--parch2);border:1px solid var(--line);border-left:4px solid var(--gold);padding:14px 18px;border-radius:6px;font-size:14.5px;font-style:italic;color:var(--ink-soft);margin-bottom:30px}
+  section{margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  h2.sec{font-size:24px;color:#1f2538;margin:28px 0 4px;cursor:pointer;display:flex;align-items:baseline;gap:11px;user-select:none}
+  h2.sec .n{color:var(--gold);font-size:18px;font-weight:bold}
+  h2.sec .clock{margin-left:auto;font-family:'Trebuchet MS',sans-serif;font-size:11px;letter-spacing:.04em;background:#3a2c05;color:var(--gold-soft);padding:3px 9px;border-radius:20px;font-weight:bold}
+  h2.sec .caret{font-size:14px;color:var(--ink-soft);transition:transform .2s;margin-left:8px}
+  section.collapsed h2.sec .caret{transform:rotate(-90deg)}
+  section.collapsed .body{display:none}
+  .lvl{font-family:'Trebuchet MS',sans-serif;font-size:12px;color:var(--ink-soft);margin:0 0 6px;letter-spacing:.04em}
+  p{margin:8px 0}ul,ol{margin:8px 0 8px 4px;padding-left:22px}li{margin:5px 0}
+  .hook{background:#fbf6e8;border:1px solid var(--gold);border-radius:8px;padding:11px 15px;margin:12px 0;font-size:14px}
+  .hook b{color:#8a6d12}
+  .arcs{display:flex;gap:16px;margin:14px 0}
+  .arc{flex:1;border-radius:10px;padding:14px 16px;font-size:13.7px}
+  .arc h4{margin:0 0 6px;font-family:'Trebuchet MS',sans-serif;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+  .arc.sel{background:var(--sel-bg);border:1px solid #b9dcdc;border-top:4px solid var(--sel)}
+  .arc.sel h4{color:var(--sel)}
+  .arc.val{background:var(--val-bg);border:1px solid #d8c4dd;border-top:4px solid var(--val)}
+  .arc.val h4{color:var(--val)}
+  .cross{background:#fff;border:1px solid var(--gold);border-left:5px solid var(--gold);border-radius:8px;padding:12px 16px;margin:14px 0}
+  .cross .t{font-family:'Trebuchet MS',sans-serif;font-weight:bold;color:#8a6d12;font-size:12px;letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:6px}
+  .cross ol{margin:4px 0 0;padding-left:20px}
+  .leva{background:#fbf6e8;border:1px dashed var(--gold);border-radius:8px;padding:12px 16px 12px 42px;margin:14px 0;position:relative;font-size:14px}
+  .leva::before{content:"⚙";position:absolute;left:14px;top:11px;font-size:18px;color:var(--gold)}
+  .leva .t{font-family:'Trebuchet MS',sans-serif;font-weight:bold;color:#8a6d12;font-size:12.5px;text-transform:uppercase;display:block;margin-bottom:4px}
+  .rule{background:var(--navy);color:#eee;border-radius:8px;padding:14px 18px;margin:16px 0;border-left:4px solid var(--gold);font-size:14.5px}
+  .rule b{color:var(--gold-soft)}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:13px;background:#fff}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--navy2);color:#f0e8d4;font-family:'Trebuchet MS',sans-serif;font-weight:600}
+  tr:nth-child(even) td{background:var(--parch2)}
+  .final{background:linear-gradient(180deg,#1f2538,#2a1f08);color:#f3e6bf;border:1px solid var(--gold);border-radius:10px;padding:16px 20px;margin:14px 0}
+  .final h4{color:var(--gold-soft);margin:0 0 6px;font-family:'Trebuchet MS',sans-serif;letter-spacing:.05em}
+  em{color:#6b5e3f}
+  mark{background:#ffe8a0;padding:0 1px;border-radius:2px}
+  .footer{margin-top:36px;font-size:13px;color:var(--ink-soft);font-style:italic;border-top:2px solid var(--gold);padding-top:16px}
+  #menubtn{display:none}
+  @media(max-width:820px){
+    .wrap{flex-direction:column}.arcs{flex-direction:column}
+    #sidebar{position:fixed;left:0;top:0;width:84%;max-width:300px;z-index:50;transform:translateX(-105%);transition:transform .25s;height:100vh}
+    #sidebar.open{transform:translateX(0)}
+    #menubtn{display:flex;gap:8px;align-items:center;position:fixed;top:12px;left:12px;z-index:60;background:var(--navy);color:var(--gold);border:1px solid var(--gold);border-radius:8px;padding:9px 13px;font-family:'Trebuchet MS',sans-serif;font-size:14px}
+    main{padding:62px 18px 100px}
+    #backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:40}#backdrop.show{display:block}
+  }
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;bottom:14px;right:14px;z-index:9999;background:#161b29;color:#c9a227;border:1px solid #c9a227;border-radius:20px;padding:8px 14px;font-family:Trebuchet MS,sans-serif;font-size:12.5px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.35)">⌂ Indice</a>
+<button id="menubtn">☰ Atti</button>
+<div id="backdrop"></div>
+<div class="wrap">
+<aside id="sidebar">
+  <div class="brand">
+    <div class="kick">Selavia · riservato master</div>
+    <h1>Archi dei Due Tavoli</h1>
+    <div class="sub">paralleli &amp; intrecciati · 5 atti</div>
+  </div>
+  <div class="searchbox"><input id="search" type="search" placeholder="🔍 Cerca…" autocomplete="off"><span id="count"></span></div>
+  <nav id="toc"></nav>
+</aside>
+<main id="content">
+  <div class="topnote">Gli archi di <b style="color:var(--sel)">Selmàra</b> e <b style="color:var(--val)">Vàlmera</b> corrono separati ma <b>si toccano di continuo</b>. In ogni Atto: i due archi + le <b>Intersezioni</b> (in oro) + l'avanzamento dell'<b>Orologio della Spirale</b>. &nbsp;·&nbsp; Clicca un titolo per chiudere/aprire.</div>
+
+  <section id="s0" data-title="0. Come leggere">
+    <h2 class="sec"><span class="n">0</span> Come leggere <span class="caret">▾</span></h2>
+    <div class="body">
+      <p>Cinque <b>Atti</b> dal livello 1 al climax. In ognuno: l'arco di <b style="color:var(--sel)">Selmàra</b> (Nord, nautico/intrigo — <em>«perché le maree cambiano adesso?»</em>), l'arco di <b style="color:var(--val)">Vàlmera</b> (Sud, sacro/esplorativo — <em>«cosa c'è nelle rovine?»</em>), le <b>Intersezioni</b>, e l'<b>Orologio</b>.</p>
+      <div class="rule"><b>Principio guida.</b> Le <b>azioni</b> attraversano i tavoli, le <b>scene</b> no. Ogni intersezione arriva all'altro gruppo come <em>situazione da affrontare</em>. Il mistero è distribuito <b>metà per tavolo</b>: da soli non lo risolvono.</div>
+      <div class="leva"><span class="t">Calibrazione</span>I livelli sono indicativi (1→17+). Se i tavoli vanno a velocità diverse, sincronizzateli sull'<b>Orologio</b> (cosa è successo nel mondo), non sul livello dei PG.</div>
+    </div>
+  </section>
+
+  <section id="s1" data-title="1. Il motore delle intersezioni">
+    <h2 class="sec"><span class="n">1</span> Il motore delle intersezioni <span class="caret">▾</span></h2>
+    <div class="body">
+      <p>Sette tipi di crossing riutilizzabili. Mescolali: punta a <b>2–3 per Atto</b> più i contatti minori.</p>
+      <ol>
+        <li><b>Conseguenza incrociata.</b> Un'azione di un tavolo diventa un <em>fatto del mondo</em> per l'altro.</li>
+        <li><b>MacGuffin diviso.</b> Un oggetto/segreto in due metà, una per regione (le tre <b>Ancore</b>, i frammenti di un <b>Nome</b>).</li>
+        <li><b>PNG-ponte.</b> Lo stesso personaggio a entrambi i tavoli: <b>Vàren</b>, <b>Cendre</b>, un agente di <b>Véra</b>, il <b>Veliero</b>.</li>
+        <li><b>Indizio complementare.</b> Ogni gruppo trova <em>metà</em> di una verità; devono scambiarsela.</li>
+        <li><b>Antagonista condiviso.</b> Una fazione/villain agisce su entrambe le regioni.</li>
+        <li><b>Messaggio/scambio diretto.</b> Lettere, prigionieri, merci, un PG "in trasferta".</li>
+        <li><b>Eco della Spirale.</b> Sogni e segni identici a entrambi i tavoli nella stessa settimana di gioco.</li>
+      </ol>
+      <div class="leva"><span class="t">Cadenza in parallelo</span>Stessa sera, stanze diverse: tenete un <b>canale di chat tra i master</b> e <b>iniettate in tempo reale</b> i fatti esportabili dell'altro tavolo (una voce di porto, un dispaccio). Le intersezioni vivono nello stesso minuto.</div>
+    </div>
+  </section>
+
+  <section id="s2" data-title="2. La spina condivisa">
+    <h2 class="sec"><span class="n">2</span> La spina condivisa <span class="caret">▾</span></h2>
+    <div class="body">
+      <p>Entrambe le strade convergono su <b>Vael, il dio mancato</b> (Bibbia §5), che nascerà al <b>Secondo Evento</b>. Tappe comuni:</p>
+      <ul>
+        <li><b>Atto I–II:</b> capire che <em>qualcosa</em> lega àlbora, maree e rovine. Mezzo mistero ciascuno.</li>
+        <li><b>Atto III (Veliero):</b> ottenere il <b>metodo per legare un dio</b> (le tre Ancore).</li>
+        <li><b>Atto IV (Arca dei Nomi):</b> la <b>profezia completa e il Nome</b>; capire che la Spirale è la Culla Frantumata.</li>
+        <li><b>Atto V (Spirale):</b> finale congiunto — fermare Vael o lasciarlo nascere.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="s3" data-title="3. Atto I — Il Faro Spento">
+    <h2 class="sec"><span class="n">I</span> Atto I — Il Faro Spento <span class="clock">Orologio +1</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <div class="lvl">LIVELLI 1–3</div>
+      <div class="hook"><b>Aggancio comune (fissato):</b> un grande <b>faro d'àlbora si spegne</b>. Al Nord è una catastrofe economica; al Sud è letto come un <em>segno</em>.</div>
+      <div class="arcs">
+        <div class="arc sel"><h4>Selmàra · Nord</h4>Il faro-cardine di <b>Selporto</b> muore: le rotte vanno nel caos, la <b>Gilda dei Lumi</b> nel panico. La ciurma indaga il <b>perché</b>. Pista falsa: sabotaggio di una Casata. Verità: il <b>giacimento d'àlbora si sta spegnendo da solo</b> — primo sospetto del legame estrazione↔instabilità.</div>
+        <div class="arc val"><h4>Vàlmera · Sud</h4>La stessa notte una <b>rovina del Primo Splendore riaffiora</b> presso <b>Cala Vael</b>. Culto vs Custodi sul suo significato. La ciurma esplora: rune, Rune di Persistenza, la <b>prima eco della Voce</b>.</div>
+      </div>
+      <div class="cross"><span class="t">Intersezioni</span>
+        <ol>
+          <li><b>Conseguenza:</b> il faro spento al Nord <b>chiude le rotte verso il Sud</b> → Vàlmera resta isolata, merci e prezzi nel caos: un problema che non hanno causato loro.</li>
+          <li><b>PNG-ponte + oggetto conteso:</b> <b>Vàren</b> sbarca a Sud un <b>agente di Véra</b> venuto per quella rovina → i due tavoli toccano lo <b>stesso oggetto</b> da lati opposti.</li>
+          <li><b>Eco:</b> <b>Sorella Cendre</b> appare a entrambe le ciurme con lo stesso avvertimento: <em>«Non svegliatelo.»</em></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="s4" data-title="4. Atto II — Le Maree Folli">
+    <h2 class="sec"><span class="n">II</span> Atto II — Le Maree Folli <span class="clock">Orologio +1/2</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <div class="lvl">LIVELLI 4–6</div>
+      <div class="arcs">
+        <div class="arc sel"><h4>Selmàra · Nord</h4>Le rotte impazziscono, scoppia una <b>guerra fredda tra Casate</b>, la Gilda raddoppia l'estrazione. La ciurma collega i puntini: <b>più si scava, più le maree si guastano</b> (<em>perché adesso</em>). Devono scegliere se e contro chi denunciarlo.</div>
+        <div class="arc val"><h4>Vàlmera · Sud</h4>Le rovine si <b>moltiplicano</b>; scontro aperto <b>Culto vs Custodi</b>. Tra le rovine, <b>frammenti della profezia del Secondo Evento</b> (<em>cosa c'è nelle rovine</em>) — senza ancora capirne il senso.</div>
+      </div>
+      <div class="cross"><span class="t">Intersezioni</span>
+        <ol>
+          <li><b>Conseguenza maggiore:</b> se il Nord <b>affonda la nave-banca della Gilda</b>, al Sud <b>salta il finanziamento dei pellegrinaggi</b> → rivolta che la ciurma Sud deve gestire (e viceversa).</li>
+          <li><b>Indizio complementare:</b> un reperto del Sud indica un sito <b>nel Nord</b>; un registro del Nord nomina un luogo <b>nel Sud</b>. Devono <b>scambiarsi le metà</b>.</li>
+          <li><b>Antagonista condiviso:</b> lo stesso agente di Véra (o un cardinale del Culto) tira i fili in entrambe le regioni.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="s5" data-title="5. Atto III — Il Veliero Fantasma">
+    <h2 class="sec"><span class="n">III</span> Atto III — Il Veliero Fantasma <span class="clock">Orologio +2</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <div class="lvl">LIVELLI 7–10 · l'Atto più intrecciato</div>
+      <p>Entrambe le ciurme incrociano il <b>Veliero</b> e il <b>Capitano Senza Passaggio</b> — l'usurpatore del divino punito dai tre dèi. Le tre <b>Ancore</b> sono sparse tra le regioni:</p>
+      <div class="arcs">
+        <div class="arc sel"><h4>Selmàra · Nord</h4><b>Ancora d'Onda</b> (Calipso), nelle acque di Selmàra. Prova di Calipso: attraversare il cuore della tempesta.</div>
+        <div class="arc val"><h4>Vàlmera · Sud</h4><b>Ancora d'Ombra</b> (Neretha), negli abissi/rovine di Vàlmera. Prova di Neretha: riaccendere la lanterna capovolta.</div>
+      </div>
+      <p style="text-align:center;font-size:13.5px"><b>Ancora di Pietra</b> (Gaia) — <b>contesa</b>, su un'isola di confine: richiede <b>entrambe</b> le ciurme. Prova di Gaia: riconquistare il diritto di toccare terra.</p>
+      <div class="cross"><span class="t">Intersezioni — al massimo</span>
+        <ol>
+          <li><b>MacGuffin diviso (cuore dell'Atto):</b> ogni ciurma recupera un'Ancora; la terza li costringe a operare <b>insieme</b>.</li>
+          <li><b>Sessione-ponte:</b> uno-due PG "in trasferta", o <b>mini-sessione congiunta</b> sull'isola della Pietra.</li>
+          <li><b>Rivelazione condivisa:</b> il modo in cui i tre dèi <em>legarono</em> il Capitano è <b>la chiave per legare Vael</b>. Ora sanno di avere un unico nemico finale.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="s6" data-title="6. Atto IV — I Nomi Perduti">
+    <h2 class="sec"><span class="n">IV</span> Atto IV — I Nomi Perduti <span class="clock">Orologio +3</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <div class="lvl">LIVELLI 11–14</div>
+      <div class="arcs">
+        <div class="arc sel"><h4>Selmàra · Nord</h4>La verità esplode: <b>l'àlbora è Vael che si nutre</b>. Fermare/convertire la <b>Gilda</b> (Véra sceglie da che parte stare) e trovare la <b>metà Nord</b> della rotta verso una Culla.</div>
+        <div class="arc val"><h4>Vàlmera · Sud</h4>Caccia all'<b>Arca dei Nomi</b> (la perduta Culla Superstite): la <b>profezia completa</b> e il <b>Nome</b> che può legare Vael. <b>Mèris</b> rivela ciò che custodisce; <b>Cendre</b> finalmente ascoltata.</div>
+      </div>
+      <div class="cross"><span class="t">Intersezioni</span>
+        <ol>
+          <li><b>Indizio complementare decisivo:</b> la rotta per la Culla è <b>metà al Nord</b> (carte/stelle) e <b>metà al Sud</b> (profezia/Nomi). Senza unirle, nessuno arriva.</li>
+          <li><b>Gli dèi a caro prezzo:</b> Gaia/Calipso/Neretha aiutano entrambe le ciurme chiedendo voti diversi: le scelte di un tavolo <b>vincolano</b> i favori dell'altro.</li>
+          <li><b>Conseguenza politica:</b> le posizioni di Véra (Nord) e Mèris (Sud) si <b>rispecchiano</b>: alleati o nemici nel finale a seconda di come li avete trattati.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="s7" data-title="7. Atto V — Il Secondo Evento">
+    <h2 class="sec"><span class="n">V</span> Atto V — Il Secondo Evento <span class="clock">Orologio MAX</span><span class="caret">▾</span></h2>
+    <div class="body">
+      <div class="lvl">LIVELLI 15+ · finale congiunto, 10 al tavolo</div>
+      <p>La <b>Spirale</b> si apre, <b>Vael sta per nascere</b>. Convergenza di entrambe le ciurme (Bibbia §16.4: Regista + Operatore, turni a clessidra). In mano hanno — se hanno lavorato — le tre <b>Ancore</b>, il <b>Nome</b> dell'Arca, gli <b>dèi</b> alleati scomodi, forse il <b>Capitano</b> liberato.</p>
+      <div class="final">
+        <h4>La scelta finale — i Custodi avevano ragione?</h4>
+        <ul>
+          <li><b>Legare Vael</b> (Ancore + Nome): impedire la nascita — ma a quale prezzo per l'àlbora e il mondo?</li>
+          <li><b>Lasciarlo nascere</b> e negoziare cosa diventa: un quarto dio… benevolo? terribile?</li>
+          <li><b>Sostituire un Nome:</b> qualcuno (un PG?) prende il posto di Vael — eco del Capitano Senza Passaggio.</li>
+        </ul>
+      </div>
+      <div class="cross"><span class="t">Intersezione finale</span><ol><li>Tutto converge: alleanze, Ancore, favori divini e stato delle fazioni (dal Registro del Mondo) <b>entrano in scena come risorse o ostacoli</b> nel finale comune.</li></ol></div>
+    </div>
+  </section>
+
+  <section id="s8" data-title="8. Tabella riassuntiva">
+    <h2 class="sec"><span class="n">8</span> Tabella riassuntiva <span class="caret">▾</span></h2>
+    <div class="body">
+      <table>
+        <thead><tr><th>Atto</th><th>Liv.</th><th>Selmàra</th><th>Vàlmera</th><th>Intersezione-chiave</th><th>Orol.</th></tr></thead>
+        <tbody>
+          <tr><td><b>I — Faro Spento</b></td><td>1–3</td><td>Faro morto, caccia alla causa</td><td>Rovina riaffiora, prima eco</td><td>Faro isola il Sud; oggetto conteso</td><td>+1</td></tr>
+          <tr><td><b>II — Maree Folli</b></td><td>4–6</td><td>Guerra di Casate; estrazione↔maree</td><td>Culto vs Custodi; frammenti di profezia</td><td>Nave-banca; metà-mappe da scambiare</td><td>+1/2</td></tr>
+          <tr><td><b>III — Veliero</b></td><td>7–10</td><td>Ancora d'Onda</td><td>Ancora d'Ombra</td><td>Ancora di Pietra <b>insieme</b>; chiave anti-Vael</td><td>+2</td></tr>
+          <tr><td><b>IV — Nomi Perduti</b></td><td>11–14</td><td>Fermare la Gilda; metà rotta</td><td>Arca dei Nomi; il Nome</td><td>Rotta in due metà; dèi a caro prezzo</td><td>+3</td></tr>
+          <tr><td><b>V — Secondo Evento</b></td><td>15+</td><td colspan="2" style="text-align:center"><b>Finale congiunto alla Spirale</b></td><td>Tutto converge</td><td>MAX</td></tr>
+        </tbody>
+      </table>
+      <div class="footer">Selavia — archi narrativi · riservato ai master. Prossimi: Atto I "in scatola" per tavolo · Dossier del Veliero (i 3 dungeon delle Ancore) · schede antagonisti.</div>
+    </div>
+  </section>
+</main>
+</div>
+<script>
+(function(){
+  var groups=[
+    {label:"Impianto",ids:["s0","s1","s2"]},
+    {label:"Gli Atti",ids:["s3","s4","s5","s6","s7"]},
+    {label:"Sintesi",ids:["s8"]}
+  ];
+  var toc=document.getElementById('toc'), secs=[].slice.call(document.querySelectorAll('section'));
+  groups.forEach(function(g){
+    var h=document.createElement('div');h.className='grp';h.textContent=g.label;toc.appendChild(h);
+    g.ids.forEach(function(id){
+      var s=document.getElementById(id);if(!s)return;
+      var t=s.getAttribute('data-title'); var m=t.match(/^(\S+)\.\s*(.*)$/);
+      var a=document.createElement('a');a.href='#'+id;a.dataset.target=id;
+      a.innerHTML='<span class="num">'+(m?m[1]:'')+'</span>'+(m?m[2]:t);
+      toc.appendChild(a);
+    });
+  });
+  var links=[].slice.call(toc.querySelectorAll('a'));
+  secs.forEach(function(s){var h=s.querySelector('h2.sec');h.addEventListener('click',function(){s.classList.toggle('collapsed');});});
+  var sb=document.getElementById('sidebar'),mb=document.getElementById('menubtn'),bd=document.getElementById('backdrop');
+  function closeM(){sb.classList.remove('open');bd.classList.remove('show');}
+  mb.addEventListener('click',function(){sb.classList.toggle('open');bd.classList.toggle('show');});
+  bd.addEventListener('click',closeM);links.forEach(function(a){a.addEventListener('click',closeM);});
+  var spy=function(){var pos=window.scrollY+120,cur=secs[0].id;secs.forEach(function(s){if(s.offsetTop<=pos)cur=s.id;});links.forEach(function(a){a.classList.toggle('active',a.dataset.target===cur);});};
+  window.addEventListener('scroll',spy,{passive:true});spy();
+  var input=document.getElementById('search'),count=document.getElementById('count');
+  function clearMarks(root){root.querySelectorAll('mark').forEach(function(m){var p=m.parentNode;p.replaceChild(document.createTextNode(m.textContent),m);p.normalize();});}
+  function markIn(node,re){
+    var walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT,null),texts=[],found=0;
+    while(walker.nextNode())texts.push(walker.currentNode);
+    texts.forEach(function(tn){
+      if(tn.parentNode&&/^(SCRIPT|STYLE)$/.test(tn.parentNode.nodeName))return;
+      var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;
+      var frag=document.createDocumentFragment(),last=0,m;
+      while((m=re.exec(s))){
+        if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+        var mk=document.createElement('mark');mk.textContent=m[0];frag.appendChild(mk);
+        last=m.index+m[0].length;found++;if(m.index===re.lastIndex)re.lastIndex++;
+      }
+      if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));
+      tn.parentNode.replaceChild(frag,tn);
+    });
+    return found;
+  }
+  var t;input.addEventListener('input',function(){clearTimeout(t);t=setTimeout(run,140);});
+  function run(){
+    var q=input.value.trim();secs.forEach(function(s){clearMarks(s);});
+    if(!q){secs.forEach(function(s){s.style.display='';});count.textContent='';return;}
+    var esc=q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');var total=0,visible=0;
+    secs.forEach(function(s){
+      if(s.classList.contains('collapsed'))s.classList.remove('collapsed');
+      var n=markIn(s,new RegExp(esc,'gi'));
+      if(n>0){s.style.display='';visible++;total+=n;}else{s.style.display='none';}
+    });
+    count.textContent=total?(total+' risultati · '+visible+' sezioni'):'Nessun risultato';
+  }
+})();
+</script>
+</body>
+</html>
